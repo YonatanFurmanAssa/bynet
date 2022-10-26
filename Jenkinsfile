@@ -14,7 +14,7 @@ pipeline {
     stages {
           stage('Cloning Git') {
             steps {
-                git 'https://github.com/israeliwarrior/Docker-Project.git'
+                git url 'https://github.com/israeliwarrior/Docker-Project.git', branch: 'main'
             }
         }
           stage('Building image Front') {
