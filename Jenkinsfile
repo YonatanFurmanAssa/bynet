@@ -1,7 +1,7 @@
 pipeline {
        environment {
-        frontend = "israeliwarrior/docker-project/Fronend"
-        backend = "israeliwarrior/docker-project/Backend"
+        frontend = "yonatanfurmandocker/testing/fronend"
+        backend = "yonatanfurmandocker/testing/backend"
         dockerfileFront = "./Fronend"
         dockerfileBack = "./Backend"
         registryCredential = 'Docker'
