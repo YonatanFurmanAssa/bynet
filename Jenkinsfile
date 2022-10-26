@@ -1,7 +1,7 @@
 pipeline {
        environment {
-        frontend = "yonatanfurmandocker/testing/frontend"
-        backend = "yonatanfurmandocker/testing/backend"
+        frontend = "bynet_app"
+        backend = "bynet_server"
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
         registryCredential = 'Docker'
