@@ -1,7 +1,7 @@
 pipeline {
        environment {
-        frontend = "bynet_app"
-        backend = "bynet_server"
+        frontend = "bynet_app2"
+        backend = "bynet_server2"
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
         registryCredential = 'docker-cred'
