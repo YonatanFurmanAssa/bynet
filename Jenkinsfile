@@ -2,8 +2,8 @@ pipeline {
        environment {
         frontend = "israeliwarrior/docker-project/Fronend"
         backend = "israeliwarrior/docker-project/Backend"
-        dockerfileFront = "./docker-project/fronend"
-        dockerfileBack = "./docker-project/Backend"
+        dockerfileFront = "./Fronend"
+        dockerfileBack = "./Backend"
         registryCredential = 'Docker'
         // dockerImage = ''
     }
@@ -43,4 +43,7 @@ pipeline {
                     }
     }
 
+}
+               }
+    }
 }
