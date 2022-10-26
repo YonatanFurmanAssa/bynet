@@ -4,7 +4,7 @@ pipeline {
         backend = "bynet_server"
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
-        registryCredential = 'Docker'
+        registryCredential = 'desktop'
         // dockerImage = ''
     }
     agent any 
@@ -40,7 +40,7 @@ pipeline {
                stage('Deploy Image') {
             steps{
                 script {
-                    docker.withRegistry( '', registryCredential ) {
+                    docker.withRegistry( 'localhost:5000', registryCredential ) {
                         frontImage.push();
                         backImage.push()
                     }
