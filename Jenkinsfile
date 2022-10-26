@@ -4,7 +4,7 @@ pipeline {
         backend = "bynet_server"
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
-        registryCredential = 'desktop'
+        registryCredential = 'docker-cred'
         // dockerImage = ''
     }
     agent any 
