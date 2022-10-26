@@ -40,7 +40,7 @@ pipeline {
                stage('Deploy Image') {
             steps{
                 script {
-                    docker.withRegistry( 'localhost:5000', registryCredential ) {
+                    docker.withRegistry( '', registryCredential ) {
                         frontImage.push();
                         backImage.push()
                     }
