@@ -1,6 +1,5 @@
 import meetingModel from "../../../../../../Models/meeting-model";
 import meetingTypeModel from "../../../../../../Models/meetingType-model";
-import organizerModel from "../../../../../../Models/organizer-model";
 
 interface MeetingCardProps {
     meeting: meetingModel;
@@ -29,6 +28,7 @@ function MeetingCard(meeting: MeetingCardProps, meetingType: meetingTypeCardProp
             <br />
 
             client: {meeting.meeting.client}
+
 
             <br />
 

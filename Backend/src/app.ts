@@ -18,4 +18,3 @@ server.use("*", (request: Request, response: Response, next: NextFunction) => {
 server.use(catchAll);
 
 server.listen(config.port, () => console.log("Listening..."));
-

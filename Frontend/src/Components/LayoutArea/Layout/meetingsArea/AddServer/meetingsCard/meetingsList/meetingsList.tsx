@@ -35,7 +35,7 @@ function MeetingsList(): JSX.Element {
     return (
         <div className="MeetingList">
 
-            <label>Select Category: </label>
+            <label>Select organizer: </label>
             <select defaultValue="0" onChange={displayMeetings}>
                 <option disabled value="0"></option>
                 {organizer.map(c => <option key={c.organizer_id} value={c.organizer_id}>{c.organizer_name}</option>)}

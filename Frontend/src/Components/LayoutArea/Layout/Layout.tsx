@@ -9,7 +9,7 @@ function Layout(): JSX.Element {
                 <NavLink className="header-title" to="/meetings">Meetings list</NavLink>
                 <NavLink className="header-title" to="/meetings/add">Add meeting</NavLink>
             </div>
-            <h1>meetings </h1>
+            <h1>Meetings </h1>
 
             <Routing />
 
