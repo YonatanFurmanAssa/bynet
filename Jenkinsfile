@@ -5,7 +5,6 @@ pipeline {
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
         registryCredential = 'docker-cred'
-        // dockerImage = ''
     }
     agent any 
     triggers {
