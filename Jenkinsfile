@@ -11,12 +11,12 @@ pipeline {
     githubPush()
     }
     stages {
-          stage('Cloning Git') {
+          stage('Clone git') {
             steps {
                 git url: 'https://github.com/israeliwarrior/Docker-Project.git', branch: 'main'
             }
         }
-          stage('Building image Front') {
+          stage('Building the front image') {
             steps{
                 script {
                     frontImage = docker.build(frontend + ":latest",
@@ -26,7 +26,7 @@ pipeline {
             }
         }
         
-         stage('Building image Back') {
+         stage('Building the backend image') {
             steps{
                 script {
                     backImage = docker.build(backend + ":latest",
@@ -36,7 +36,7 @@ pipeline {
             }
         }
 
-               stage('Deploy Image') {
+               stage('Deploing Image to dockerhub') {
             steps{
                 script {
                     docker.withRegistry( '', registryCredential ) {
