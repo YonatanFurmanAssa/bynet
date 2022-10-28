@@ -40,7 +40,7 @@ pipeline {
 
         // }
 
-        stage{
+        stage('docker compose up'){
             steps{
             sh 'docker compose up -d --no-color --wait '
             sh 'docker compose ps' }
