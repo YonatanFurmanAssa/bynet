@@ -41,8 +41,9 @@ pipeline {
         // }
 
         stage{
+            steps{
             sh 'docker compose up -d --no-color --wait '
-            sh 'docker compose ps'
+            sh 'docker compose ps' }
         }
 
                stage('Deploing Image to dockerhub') {
