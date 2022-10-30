@@ -36,15 +36,15 @@ pipeline {
             }
         }
 
-        // stage('cleaning docker volumes'){
+        // // stage('cleaning docker volumes'){
 
+        // // }
+
+        // stage('docker compose up'){
+        //     steps{
+        //     sh 'docker compose up -d --no-color --wait '
+        //     sh 'docker compose ps' }
         // }
-
-        stage('docker compose up'){
-            steps{
-            sh 'docker compose up -d --no-color --wait '
-            sh 'docker compose ps' }
-        }
 
                stage('Deploing Image to dockerhub') {
             steps{
