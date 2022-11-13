@@ -21,8 +21,9 @@ pipeline {
         
           stage('Building the front image') {
             steps{
-                docker.withRegistry( '', registryCredential ){
+                
                  script {
+                    docker.withRegistry( '', registryCredential ){
                     frontImage = docker.build(frontend + ":latest",
                     "-f ${dockerfileFront}/Dockerfile  ${dockerfileFront}"
                     )
@@ -33,13 +34,14 @@ pipeline {
         
          stage('Building the backend image') {
             steps{
-               docker.withRegistry( '', registryCredential ){ 
+             
                 script {
-                    backImage = docker.build(backend + ":latest",
-                    "-f ${dockerfileBack}/Dockerfile  ${dockerfileBack}"
-                    )
+                      docker.withRegistry( '', registryCredential ){ 
+                         backImage = docker.build(backend + ":latest",
+                         "-f ${dockerfileBack}/Dockerfile  ${dockerfileBack}")
+                        }
                 }
-                    }
+                    
             }
         }
 
