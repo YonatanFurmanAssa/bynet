@@ -11,7 +11,7 @@ COPY package.json /app/package.json
 RUN npm install --silent
 
 # Copy all files into image /app:
-COPY . .
+COPY . . 
 
 # Expose Port
 EXPOSE 3002
