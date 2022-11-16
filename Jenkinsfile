@@ -9,6 +9,8 @@ pipeline {
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
         registryCredential = 'docker-cred'
+        frontImage=''
+        backImage=''
     }
     
     stages {
@@ -49,25 +51,27 @@ pipeline {
 
         // // }
 
-        // stage('docker compose up'){
-        //     steps{
-        //     sh 'docker compose up -d --no-color --wait '
-        //     sh 'docker compose ps' }
-        // }
+     
 
 
 
 
                stage('Deploing Image to dockerhub') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        frontImage.push();
-                        backImage.push();
-                    }
-    }
+                steps{
+                     script {
+                          docker.withRegistry( '', registryCredential ) {
+                               frontImage.push();
+                                  backImage.push();
+                                  }
+                                    }
 
 }
+               }
+
+               stage ('clean') {
+                steps{
+                    sh 'docker system prune --all'
+                        }
                }
     }
 }
