@@ -26,6 +26,7 @@ pipeline {
                 
                  script {
                     docker.withRegistry( '', registryCredential ){
+                        docker tag yonatanfurmandocker/bynet_app2:1.0 
                     frontImage = docker.build(frontend + ":latest",
                     "-f ${dockerfileFront}/Dockerfile  ${dockerfileFront}"
                     )
@@ -38,7 +39,8 @@ pipeline {
             steps{
              
                 script {
-                      docker.withRegistry( '', registryCredential ){ 
+                      docker.withRegistry( '', registryCredential ){
+                         docker tag yonatanfurmandocker/bynet_server2:1.0  
                          backImage = docker.build(backend + ":latest",
                          "-f ${dockerfileBack}/Dockerfile  ${dockerfileBack}")
                         }
