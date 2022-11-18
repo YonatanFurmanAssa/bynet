@@ -10,8 +10,11 @@ pipeline {
             agent any
             steps {
                 script {
-                    sh 'docker build -f $dockerfileFront -t yonatanfurmandocker/bynet_app2:1.0'
-                    sh 'docker build -f $dockerfileBack -t yonatanfurmandocker/bynet_server2:1.0'
+                    
+                    sh 'docker build -f $dockerfileFront'
+                    sh 'docker build -f $dockerfileBack'
+                    sh 'docker tag  68a6abb31606 yonatanfurmandocker/bynet_server2:1.0'
+                    sh 'docker tag  025761f84164 yonatanfurmandocker/bynet_app2:1.0'
                     echo 'Building The Images Was A Success'
                 }
             }
