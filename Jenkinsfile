@@ -1,79 +1,52 @@
 pipeline {
-    agent any 
-    triggers {
-    githubPush()
-    }
-       environment {
-        frontend = "bynet_app2"
-        backend = "bynet_server2"
+    environment {
+        DOCKERHUB_CREDENTIALS=credentials('Docker-Cred')
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
-        registryCredential = 'docker-cred'
-        frontImage=''
-        backImage=''
+    }
+    agent any
+    stages {
+        stage('Building The Frontend Docker Image') {
+            agent any
+            steps {
+                script {
+                    sh 'docker build -f $dockerfileFront -t yonatanfurmandocker/bynet_app2:1.0'
+                    sh 'docker build -f $dockerfileBack -t yonatanfurmandocker/bynet_server2:1.0'
+                    echo 'Building The Images Was A Success'
+                }
+            }
+        }
+        stage('Login') {
+
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('docker push to hub'){
+            steps {
+                sh 'docker push yonatanfurmandocker/bynet_app2:1.0'
+                sh 'docker push yonatanfurmandocker/bynet_server2:1.0'
+                echo 'images were pushed to dockerhub'
+                sh 'docker system prune --all'
+                echo 'y'
+                echo 'docker image removed from local'
+            }
+        }
+        stage('Test'){
+            steps{
+                sshagent(['ec2-user']) {
+                    sh 'bash -x deploy.sh test'
+                }
+            }
+        }
+         stage('Prod'){
+            steps{
+                sshagent(['ec2-user']) {
+                    sh 'bash -x deploy.sh prod'
+                }
+            }
+        }
+         
     }
     
-    stages {
-          stage('Clone git') {
-            steps {
-                git url: 'https://github.com/israeliwarrior/Docker-Project.git', branch: 'main'
-            }
-        }
-
-        
-          stage('Building the front image') {
-            steps{
-                
-                 script {
-                    docker.withRegistry( '', registryCredential ){
-                    docker.tag (yonatanfurmandocker/bynet_app2:1.0) 
-                    frontImage = docker.build(frontend + ":latest",
-                    "-f ${dockerfileFront}/Dockerfile  ${dockerfileFront}"
-                    )
-                }
-            }
-                 }
-        }
-        
-         stage('Building the backend image') {
-            steps{
-             
-                script {
-                      docker.withRegistry( '', registryCredential ){
-                         docker.tag (yonatanfurmandocker/bynet_server2:1.0)  
-                         backImage = docker.build(backend + ":latest",
-                         "-f ${dockerfileBack}/Dockerfile  ${dockerfileBack}")
-                        }
-                }
-                    
-            }
-        }
-
-        // // stage('cleaning docker volumes'){
-
-        // // }
-
-     
-
-
-
-
-               stage('Deploing Image to dockerhub') {
-                steps{
-                     script {
-                          docker.withRegistry( '', registryCredential ) {
-                               frontImage.push();
-                                  backImage.push();
-                                  }
-                                    }
-
-}
-               }
-
-               stage ('clean') {
-                steps{
-                    sh 'docker system prune --all'
-                        }
-               }
-    }
 }
