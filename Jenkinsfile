@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        DOCKERHUB_CREDENTIALS=credentials('Docker-Cred')
+        DOCKERHUB_CREDENTIALS=credentials('docker-cred')
         dockerfileFront = "./Frontend"
         dockerfileBack = "./Backend"
     }
