@@ -1,34 +1,27 @@
 #!/usr/bin/bash
-# first and foremost - input checking!
-# check if correct number of arguments were entered:
-if [ "$#" -ne 1 ]; then
-	echo "Usage: ${0} [test|prod]" >&2
-	exit 1
-fi
-# check input spelling:
-machine=$1
-if [ $machine != "test" ] && [ $machine != "prod" ]; then
-	echo -e "Enter the input correctly: test or prod\nUsage: ${0} [test|prod]" >&2
-	exit 1
-fi
 
-echo "deploying to ${machine} machine..."
-# making sure final-project directory exists and copying to it all the files from the git repository:
-rsync -zrv --delete /var/lib/jenkins/workspace/attendance-project/ $machine:/home/ec2-user/final-project/
-# connecting to the input machine and running multiple commands:
-ssh -T $machine << EOF
-	cd final-project/
-	bash docker-clean.sh
-	docker-compose up -d
-	sleep 20
-	curl -X POST localhost:3000
-	curl -X POST localhost:3002
-EOF
-# if deploying to test move tests directory to test machine and run tests:
-if [ $machine == "test" ]; then
-	ssh -T test <<-EOF
-	cd final-project/tests/
-	# bash test-back.sh
-	# #bash test-front.sh
-	EOF
+# VARABLES #
+machine=$1
+jenkins_folder="/var/lib/jenkins/workspace/dev-Automation/docker-compose.yml"
+echo "deploying to $machine"
+echo "createing directory and copy"
+scp -o StrictHostKeyChecking=no -r $jenkins_folder ec2-user@$machine:/home/ec2-user/final
+scp -o StrictHostKeyChecking=no -r ~/.docker/config.json ec2-user@$machine:~/.docker/config.json
+echo "COPIED to $machine"
+ssh ec2-user@$machine "docker login"
+ssh ec2-user@$machine "docker pull yonatanfurmandocker/bynets_server2:1.0"
+ssh ec2-user@$machine "docker pull yonatanfurmandocker/bynets_app2:1.0"
+ssh ec2-user@$machine "docker-compose -f /home/ec2-user/final/docker-compose.yaml up -d"
+if [ $machine == "test" ];
+then
+    sleep 20
+    echo 'Run Curl testing...'
+    if curl -I test 2>&1 | grep -w "200\|301" ; then
+        echo 'The Test Was A Success'
+    else
+        echo 'The Test Failed Unfortunately'
+    fi
+    
+    ssh ec2-user@$machine "docker-compose -f /home/ec2-user/final/docker-compose.yaml down"
+    echo 'Test Docker Finished !' 
 fi
