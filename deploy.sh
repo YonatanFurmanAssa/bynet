@@ -21,13 +21,14 @@ ssh -T $machine << EOF
 	bash docker-clean.sh
 	docker-compose up -d
 	sleep 20
-	curl -X POST localhost:5000
+	curl -X POST localhost:3000
+	curl -X POST localhost:3002
 EOF
 # if deploying to test move tests directory to test machine and run tests:
 if [ $machine == "test" ]; then
 	ssh -T test <<-EOF
 	cd final-project/tests/
-	bash test-back.sh
-	#bash test-front.sh
+	# bash test-back.sh
+	# #bash test-front.sh
 	EOF
 fi
