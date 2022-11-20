@@ -31,5 +31,5 @@ else
     ssh ec2-user@$machine "sudo docker pull yonatanfurmandocker/bynet_app2:latest"
     ssh ec2-user@$machine "sudo docker pull yonatanfurmandocker/bynet_server2:latest"
     ssh ec2-user@$machine "sudo docker-compose -f bynet/docker-compose.yaml down"
-    ssh ec2-user@$machine "sudo docker-compose -f bynet/docker-compose.yaml --no-build up -d"
+    ssh ec2-user@$machine "sudo docker-compose -f bynet/docker-compose.yaml up -d"
 fi
