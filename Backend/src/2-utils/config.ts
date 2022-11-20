@@ -14,7 +14,7 @@ class Config {
 
 class DevelopmentConfig extends Config {
     public port = 3002;
-    public sqlHost = "http://ec2-54-227-120-82.compute-1.amazonaws.com";
+    public sqlHost = "localhost";
     public sqlUser = "root";
     public sqlPassword = "";
     public sqlDatabase = "bynet2"; // Database Name
@@ -22,12 +22,12 @@ class DevelopmentConfig extends Config {
 }
 
 class ProductionConfig extends Config {
-    public port = 3002;
-    public sqlHost = "http://ec2-54-227-120-82.compute-1.amazonaws.com";
-    public sqlUser = "root";
-    public sqlPassword = "";
-    public sqlDatabase = "bynet2"; 
-    public dbPort = 3306;
+    public port = +process.env.PORT;
+    public sqlHost = process.env.SQL_HOST;
+    public sqlUser = process.env.SQL_USER;
+    public sqlPassword = process.env.SQL_PASSWORD;
+    public sqlDatabase = process.env.SQL_DATABASE;
+    public dbPort = +process.env.SQL_PORT;
 }
 
 const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig() : new ProductionConfig();
