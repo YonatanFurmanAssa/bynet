@@ -6,7 +6,7 @@ pipeline {
     }
     agent any
     stages {
-        stage('Building The Frontend Docker Image') {
+        stage('Building The Frontend And Backend Docker Images') {
             agent any
             steps {
                 script {
