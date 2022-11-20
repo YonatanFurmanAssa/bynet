@@ -14,7 +14,7 @@ then
     fi
     
     echo 'Test Docker Finished !' 
-fi
+
 else
     jenkins_folder="/var/lib/jenkins/workspace/dev-Automation/docker-compose.yml"
     echo "deploying to $machine"
