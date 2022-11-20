@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   app:  
-    image: bynet_app2:latest
+    image: yonatanfurmandocker/bynet_app2:latest
     ports:
       - 3000:3000
     environment:
@@ -11,7 +11,7 @@ services:
     links:
       - server
   server:
-    image: bynet_server2:latest
+    image: yonatanfurmandocker/bynet_server2:latest
     links:
       - db
     ports:
