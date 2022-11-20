@@ -28,6 +28,8 @@ else
     echo "COPIED to $machine"
     ssh ec2-user@$machine "echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
     ssh ec2-user@$machine "cd bynet"
+    ssh ec2-user@$machine "sudo docker pull yonatanfurmandocker/bynet_app2:latest"
+    ssh ec2-user@$machine "sudo docker pull yonatanfurmandocker/bynet_server2:latest"
     ssh ec2-user@$machine "sudo docker-compose -f bynet/docker-compose.yaml down"
-    ssh ec2-user@$machine "sudo docker-compose -f bynet/docker-compose.yaml up -d"
+    ssh ec2-user@$machine "sudo docker-compose -f bynet/docker-compose.yaml --no-build up -d"
 fi
