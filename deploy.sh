@@ -17,7 +17,7 @@ then
 
 else
     jenkins_folder="/var/lib/jenkins/workspace/dev-Automation/docker-compose.yml"
-    DOCKERHUB_CREDENTIALS_PSW=$2
+    DOCKERHUB_CREDENTIALS_PSW=Roytheking2022
     DOCKERHUB_CREDENTIALS_USR=$3
     echo "deploying to $machine"
     echo "createing directory and copy"
