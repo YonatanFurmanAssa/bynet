@@ -6,7 +6,7 @@ services:
       - 3000:3000
     environment:
       NODE_ENV: "production"
-      SERVER_URL: "54.227.120.82"
+      SERVER_URL: "3.80.133.59"
       SERVER_PORT: "3002"
     links:
       - server
