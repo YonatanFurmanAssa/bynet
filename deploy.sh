@@ -16,7 +16,7 @@ then
     echo 'Test Docker Finished !' 
 
 else
-    jenkins_folder="/var/lib/jenkins/workspace/dev-Automation/docker-compose.yml"
+    jenkins_folder="/var/lib/jenkins/workspace/dev-Automation/bynet/docker-compose.yml"
     DOCKERHUB_CREDENTIALS_PSW=$2
     DOCKERHUB_CREDENTIALS_USR=$3
     echo "deploying to $machine"
