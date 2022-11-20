@@ -22,8 +22,8 @@ else
     scp -o StrictHostKeyChecking=no -r $jenkins_folder ec2-user@$machine:/home/ec2-user/bynet
     scp -o StrictHostKeyChecking=no -r ~/.docker/config.json ec2-user@$machine:~/.docker/config.json
     echo "COPIED to $machine"
-    ssh ec2-user@$machine "docker login"
-    ssh ec2-user@$machine "cd /home/ec2-user/bynet"
-    ssh ec2-user@$machine "docker-compose down"
-    ssh ec2-user@$machine "docker-compose up"
+    ssh ec2-user@localhost "docker login"
+    ssh ec2-user@localhost "cd /home/ec2-user/bynet"
+    ssh ec2-user@localhost "docker-compose down"
+    ssh ec2-user@localhost "docker-compose up"
 fi
