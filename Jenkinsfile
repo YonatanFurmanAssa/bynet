@@ -11,10 +11,8 @@ pipeline {
             steps {
                 script {
                     
-                    sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront'
-                    sh 'docker build -f $dockerfileBack/Dockerfile $dockerfileBack'
-                    sh 'docker tag yonatanfurmandocker/bynet_server2:latest'
-                    sh 'docker tag yonatanfurmandocker/bynet_app2:latest'
+                    sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
+                    sh 'docker build -f $dockerfileBack/Dockerfile $dockerfileBack -t yonatanfurmandocker/bynet_server2:latest'
                     echo 'Building The Images Was A Success'
                 }
             }
