@@ -30,9 +30,9 @@ pipeline {
                 sh 'docker push yonatanfurmandocker/bynet_app2:1.0'
                 sh 'docker push yonatanfurmandocker/bynet_server2:1.0'
                 echo 'images were pushed to dockerhub'
-                sh 'docker system prune --all'
-                echo 'y'
-                echo 'docker image removed from local'
+                // sh 'docker system prune --all'
+                // echo 'y'
+                // echo 'docker image removed from local'
             }
         }
         stage('Test'){
