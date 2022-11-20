@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package.json /app/package.json
 
 # Run command line "npm i" insde the image:
-RUN npm install --silent
+RUN npm install
 
 # Copy all files into image /app:
 COPY . . 
