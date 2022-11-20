@@ -42,7 +42,7 @@ pipeline {
                 }
             }
         }
-         stage('Prod'){
+         stage('Production'){
             steps{
                 sshagent(['ec2-user']) {
                     sh 'bash -x deploy.sh prod'
