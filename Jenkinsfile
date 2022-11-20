@@ -36,7 +36,7 @@ pipeline {
         stage('Production'){
             steps{
                 sshagent(['ec2-user']) {
-                    sh 'bash -x deploy.sh prod'
+                    sh 'bash -x deploy.sh 54.210.26.54'
                 }
             }
         }
