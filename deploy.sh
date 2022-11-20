@@ -22,6 +22,5 @@ then
         echo 'The Test Failed Unfortunately'
     fi
     
-    ssh ec2-user@$machine "docker-compose -f /home/ec2-user/bynet/docker-compose.yaml down"
     echo 'Test Docker Finished !' 
 fi
