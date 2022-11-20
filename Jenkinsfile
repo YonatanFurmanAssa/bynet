@@ -1,8 +1,8 @@
 pipeline {
     environment {
         DOCKERHUB_CREDENTIALS=credentials('docker-cred')
-        dockerfileFront = "./Frontend"
-        dockerfileBack = "./Backend"
+        dockerfileFront = "/var/lib/jenkins/workspace/nova_bynet/Frontend"
+        dockerfileBack = "/var/lib/jenkins/workspace/nova_bynet/Backend"
     }
     agent any
     stages {
