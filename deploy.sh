@@ -24,9 +24,11 @@ else
     ssh ec2-user@$machine "rmdir bynet"
     ssh ec2-user@$machine "mkdir bynet"
     scp -o StrictHostKeyChecking=no -r $jenkins_folder/docker-compose.yaml ec2-user@$machine:/home/ec2-user/bynet
-        ssh ec2-user@$machine "rmdir Database"
+    ssh ec2-user@$machine "cd bynet"
+    ssh ec2-user@$machine "rmdir Database"
     ssh ec2-user@$machine "mkdir Database"
     scp -o StrictHostKeyChecking=no -r $jenkins_folder/Database/bynet.sql ec2-user@$machine:/home/ec2-user/bynet/Database
+    ssh ec2-user@$machine "cd .."
     ssh ec2-user@$machine "rmdir .docker"
     ssh ec2-user@$machine "mkdir .docker"
     ssh ec2-user@$machine "rm ~/.docker/config.json"
