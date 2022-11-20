@@ -6,10 +6,10 @@ class Config {
 }
 
 class DevelopmentConfig extends Config {
-    public meetingsTypeURL = "http://54.227.120.82:3002/api/meetings-type";
-    public meetingsByOrganizerUrl = "http://54.227.120.82:3002/api/meetings-by-organizer/";
-    public meetingsURL = "http://54.227.120.82:3002/api/meetings/";
-    public organizersURL = "http://54.227.120.82:3002/api/organizers/";
+    public meetingsTypeURL = "http://54.210.26.54:3002/api/meetings-type";
+    public meetingsByOrganizerUrl = "http://54.210.26.54:3002/api/meetings-by-organizer/";
+    public meetingsURL = "http://54.210.26.54:3002/api/meetings/";
+    public organizersURL = "http://54.210.26.54:3002/api/organizers/";
 }
 
 class ProductionConfig extends Config {
