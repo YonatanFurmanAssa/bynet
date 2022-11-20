@@ -33,17 +33,17 @@ pipeline {
                 echo 'docker image removed from local'
             }
         }
+        stage('Production'){
+            steps{
+                sshagent(['ec2-user']) {
+                    sh 'bash -x deploy.sh prod'
+                }
+            }
+        }
         stage('Test'){
             steps{
                 sshagent(['ec2-user']) {
                     sh 'bash -x deploy.sh test'
-                }
-            }
-        }
-         stage('Production'){
-            steps{
-                sshagent(['ec2-user']) {
-                    sh 'bash -x deploy.sh prod'
                 }
             }
         }
