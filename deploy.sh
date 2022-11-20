@@ -9,11 +9,9 @@ scp -o StrictHostKeyChecking=no -r $jenkins_folder ec2-user@$machine:/home/ec2-u
 scp -o StrictHostKeyChecking=no -r ~/.docker/config.json ec2-user@$machine:~/.docker/config.json
 echo "COPIED to $machine"
 ssh ec2-user@$machine "docker login"
-ssh ec2-user@$machine "docker pull yonatanfurmandocker/bynet_server2:1.0"
-ssh ec2-user@$machine "docker pull yonatanfurmandocker/bynet_app2:1.0"
-ssh ec2-user@$machine "docker pull "
-ssh ec2-user@$machine "cd -f /home/ec2-user/bynet/docker-compose.yaml"
-ssh ec2-user@$machine "docker-compose  up -d"
+ssh ec2-user@$machine "cd /home/ec2-user/bynet"
+ssh ec2-user@$machine "docker-compose down"
+ssh ec2-user@$machine "docker-compose up"
 if [ $machine == "test" ];
 then
     sleep 20
