@@ -12,7 +12,8 @@ ssh ec2-user@$machine "docker login"
 ssh ec2-user@$machine "docker pull yonatanfurmandocker/bynet_server2:1.0"
 ssh ec2-user@$machine "docker pull yonatanfurmandocker/bynet_app2:1.0"
 ssh ec2-user@$machine "docker pull "
-ssh ec2-user@$machine "docker-compose -f /home/ec2-user/bynet/docker-compose.yaml up -d"
+ssh ec2-user@$machine "cd -f /home/ec2-user/bynet/docker-compose.yaml"
+ssh ec2-user@$machine "docker-compose  up -d"
 if [ $machine == "test" ];
 then
     sleep 20

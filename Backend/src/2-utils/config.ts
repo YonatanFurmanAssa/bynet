@@ -14,7 +14,7 @@ class Config {
 
 class DevelopmentConfig extends Config {
     public port = 3002;
-    public sqlHost = "localhost";
+    public sqlHost = "54.227.120.82";
     public sqlUser = "root";
     public sqlPassword = "";
     public sqlDatabase = "bynet2"; // Database Name
