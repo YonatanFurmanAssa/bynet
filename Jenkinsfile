@@ -38,14 +38,14 @@ pipeline {
         stage('Test'){
             steps{
                 sshagent(['ec2-user']) {
-                    sh 'bash -x deploy.sh '
+                    sh 'bash -x deploy.sh test'
                 }
             }
         }
          stage('Prod'){
             steps{
                 sshagent(['ec2-user']) {
-                    sh 'bash -x deploy.sh '
+                    sh 'bash -x deploy.sh prod'
                 }
             }
         }
