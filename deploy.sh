@@ -22,7 +22,6 @@ else
     echo "deploying to $machine"
     echo "createing directory and copy"
     scp -o StrictHostKeyChecking=no -r $jenkins_folder ec2-user@$machine:/home/ec2-user/bynet
-    scp -o StrictHostKeyChecking=no -r ~/.docker/config.json ec2-user@$machine:~/.docker/config.json
     echo "COPIED to $machine"
     ssh ec2-user@$machine "echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
     ssh ec2-user@$machine "cd /home/ec2-user/bynet"
