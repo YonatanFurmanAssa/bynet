@@ -12,8 +12,8 @@ pipeline {
                 script {
                     sh 'docker system prune --all'
                     echo 'y'
-                    sh 'docker build --no-cache -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
-                    sh 'docker build --no-cache -f $dockerfileBack/Dockerfile $dockerfileBack -t yonatanfurmandocker/bynet_server2:latest'
+                    sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
+                    sh 'docker build -f $dockerfileBack/Dockerfile $dockerfileBack -t yonatanfurmandocker/bynet_server2:latest'
                     echo 'Building The Images Was A Success'
                 }
             }
