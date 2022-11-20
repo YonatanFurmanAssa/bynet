@@ -16,14 +16,15 @@ then
     echo 'Test Docker Finished !' 
 
 else
-    jenkins_folder="/var/lib/jenkins/workspace/bynet/docker-compose.yaml"
+    jenkins_folder="/var/lib/jenkins/workspace/nova_bynet/docker-compose.yaml"
     DOCKERHUB_CREDENTIALS_PSW=$2
     DOCKERHUB_CREDENTIALS_USR=$3
     echo "deploying to $machine"
     echo "createing directory and copy"
+    ssh ec2-user@$machine "rmdir bynet"
     ssh ec2-user@$machine "mkdir bynet"
-    ssh ec2-user@$machine "rm bynet/docker-compose.yaml"
     scp -o StrictHostKeyChecking=no -r $jenkins_folder ec2-user@$machine:/home/ec2-user/bynet/docker-compose.yaml
+    ssh ec2-user@$machine "rmdir .docker"
     ssh ec2-user@$machine "mkdir .docker"
     ssh ec2-user@$machine "rm ~/.docker/config.json"
     scp -o StrictHostKeyChecking=no -r ~/.docker/config.json ec2-user@$machine:~/.docker/config.json
