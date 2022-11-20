@@ -36,7 +36,7 @@ pipeline {
         stage('Production'){
             steps{
                 sshagent(['ec2-user']) {
-                    sh 'bash -x deploy.sh 54.210.26.54'
+                    sh 'bash -x deploy.sh 54.210.26.54 $DOCKERHUB_CREDENTIALS_PSW $DOCKERHUB_CREDENTIALS_USR'
                 }
             }
         }
