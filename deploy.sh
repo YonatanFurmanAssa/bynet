@@ -22,8 +22,10 @@ else
     echo "deploying to $machine"
     echo "createing directory and copy"
     ssh ec2-user@$machine "mkdir bynet"
+    ssh ec2-user@$machine "rm bynet/docker-compose.yaml"
     scp -o StrictHostKeyChecking=no -r $jenkins_folder ec2-user@$machine:/home/ec2-user/bynet/docker-compose.yaml
     ssh ec2-user@$machine "mkdir .docker"
+    ssh ec2-user@$machine "rm ~/.docker/config.json"
     scp -o StrictHostKeyChecking=no -r ~/.docker/config.json ec2-user@$machine:~/.docker/config.json
     echo "COPIED to $machine"
     ssh ec2-user@$machine "echo $DOCKERHUB_CREDENTIALS_PSW | sudo docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
