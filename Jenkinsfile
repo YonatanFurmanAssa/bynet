@@ -42,7 +42,7 @@ pipeline {
         stage('Test'){
             steps{
                 sshagent(['ec2-user']) {
-                    sh 'bash -x deploy.sh test'
+                    sh 'bash -x deploy.sh test 3.80.133.59'
                 }
             }
         }

@@ -5,9 +5,10 @@ machine=$1
 
 if [ $machine == "test" ];
 then
+    host=$2
     sleep 20
     echo 'Run Curl testing...'
-    if curl -I test 2>&1 | grep -w "200\|301" ; then
+    if curl -I http://$host:3002/api/meetings 2>&1 | grep -w "200\|301" ; then
         echo 'The Test Was A Success'
     else
         echo 'The Test Failed Unfortunately'
