@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        dockerfileFront = "/Users/yonatanf/jen/Frontend"}
+        dockerfileFront = "/Users/yonatanf/jen/Frontend"
     agent any
     stages {
         stage ('Connecting To Aks Cluster') {
@@ -38,6 +38,7 @@ pipeline {
          
     }
     
+}
 }
         }
          
