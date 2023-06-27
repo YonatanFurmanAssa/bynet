@@ -1,45 +1,49 @@
 pipeline {
     environment {
-        dockerfileFront = "/Users/yonatanf/jen/Frontend"
+        dockerfileFront = "/Users/yonatanf/bynet/Frontend"
+    }
     agent any
     stages {
-        stage ('Connecting To Aks Cluster') {
-            steps {
-               sh 'az account set --subscription 16001c95-e532-4041-96eb-aa2287e91761'
-               sh 'az aks get-credentials --resource-group yonis-group --name calico'
-            }
-        }
-        stage('Building The Frontend And Backend Docker Images') {
+        stage('Building Frontend Image') {
             agent any
             steps {
                 script {
                     sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
-                    echo 'Building The Images Was A Success'
+                    echo 'Image Was Built'
                 }
             }
         }
-       
-        stage('Docker Push Image To Harbour Registry'){
+        stage('Login To Azure AKS') {
+
+            steps {
+                sh 'az account set --subscription 16001c95-e532-4041-96eb-aa2287e91761'
+                sh 'az aks get-credentials --resource-group yonis-group --name calico'
+                sh 'kubectl get pods '
+            }
+        }
+        stage('docker push to hub'){
             steps {
                 sh 'docker push yonatanfurmandocker/bynet_app2:latest'
-                echo 'Frontend Image was Pushed To Harbour'
+                sh 'docker push yonatanfurmandocker/bynet_server2:latest'
+                echo 'images were pushed to dockerhub'
+                sh 'docker system prune --all'
+                echo 'y'
+                echo 'docker image removed from local'
             }
         }
         stage('Production'){
             steps{
-               echo 'yeat'
+                sshagent(['ec2-user']) {
+                    sh 'bash -x deploy.sh 3.80.133.59 $DOCKERHUB_CREDENTIALS_PSW $DOCKERHUB_CREDENTIALS_USR'
+                }
             }
         }
         stage('Test'){
             steps{
-                echo 'yeat'
+                sshagent(['ec2-user']) {
+                    sh 'bash -x deploy.sh test 3.80.133.59'
+                }
             }
-        }
-         
-    }
-    
-}
-}
         }
          
     }
