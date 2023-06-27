@@ -1,17 +1,13 @@
 pipeline {
-    environment {
-        DOCKERHUB_CREDENTIALS=credentials('docker-cred')
-        dockerfileFront = "/var/lib/jenkins/workspace/nova_bynet/Frontend"
-        dockerfileBack = "/var/lib/jenkins/workspace/nova_bynet/Backend"
-    }
+  
     agent any
     stages {
-        stage('Building The Frontend And Backend Docker Images') {
+        stage('Building Frontend Image') {
             agent any
             steps {
+                sh 'pwd'
                 script {
                     sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
-                    sh 'docker build -f $dockerfileBack/Dockerfile $dockerfileBack -t yonatanfurmandocker/bynet_server2:latest'
                     echo 'Building The Images Was A Success'
                 }
             }
