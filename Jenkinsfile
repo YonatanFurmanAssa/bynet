@@ -4,15 +4,15 @@ pipeline {
     }
     agent any
     stages {
-        stage('Building Frontend Image') {
-            agent any
-            steps {
-                script {
-                    sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
-                    echo 'Image Was Built'
-                }
-            }
-        }
+        // stage('Building Frontend Image') {
+        //     agent any
+        //     steps {
+        //         script {
+        //             sh 'docker build -f $dockerfileFront/Dockerfile $dockerfileFront -t yonatanfurmandocker/bynet_app2:latest'
+        //             echo 'Image Was Built'
+        //         }
+        //     }
+        // }
         stage('Login To Azure AKS') {
 
             steps {
