@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-                container('kubectl') {
+                container('jenkins') {
                     sh 'kubectl apply -f deployment.yaml' // Replace with your kubectl command
                 }
             }
