@@ -13,9 +13,10 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Login To Azure AKS') {
+        stage('install azure on jenkins') {
 
             steps {
+                sh 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
                 sh 'az account set --subscription 16001c95-e532-4041-96eb-aa2287e91761'
                 sh 'az aks get-credentials --resource-group yonis-group --name calico'
                 sh 'kubectl get pods '
