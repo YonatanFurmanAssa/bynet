@@ -31,7 +31,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 container('docker') {
-                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID /Users/yonatanf/bynet/bynet/Frontend} ."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID  /Users/yonatanf/bynet/bynet/Frontend} ."
                 }
             }
         }
