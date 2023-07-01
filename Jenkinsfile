@@ -14,9 +14,10 @@ pipeline {
                     image: jenkins/inbound-agent:3107.v665000b_51092-15
                     tty: true
                   - name: docker
-                    image: docker:stable-dind
-                    securityContext:
-                      privileged: true
+                    image: docker:latest
+                    command:
+                      - cat
+                    tty: true
             """
         }
     }
@@ -27,37 +28,24 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                container(name: 'docker', shell: '/bin/sh') {
-                    git branch: 'main', url: 'https://github.com/IsraeliWarrior/bynet.git'
-                }
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                container(name: 'docker', shell: '/bin/sh') {
-                    script {
-                        sh 'ls -a'
-                        docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", 'https://github.com/IsraeliWarrior/bynet.git#main:Frontend')
-                        }
-                    }
+                container('docker') {
+                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID} /var/jenkins_home/workspace/helm-yoni/Frontend"
                 }
             }
         }
 
         stage('Deploy to Kubernetes Cluster') {
             steps {
-                container(name: 'docker', shell: '/bin/sh') {
-                    withCredentials([string(credentialsId: env.DOCKER_HUB_CREDS_ID, variable: 'DOCKER_HUB_CREDS')]) {
-                        sh "docker login -u ${env.DOCKER_HUB_CREDS_USR} -p ${env.DOCKER_HUB_CREDS_PSW}"
-                        sh "docker push ${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
+                container('docker') {
+                    withCredentials([string(credentialsId: DOCKER_HUB_CREDS_ID, variable: 'DOCKER_HUB_CREDS')]) {
+                        sh "docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                     }
                 }
 
-                container(name: 'jnlp', shell: '/bin/sh') {
+                container('jnlp') {
                     sh "kubectl create deployment my-app --image=${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                 }
             }
