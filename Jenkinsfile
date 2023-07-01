@@ -30,7 +30,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 container(name: 'docker', shell: '/bin/sh') {
-                    git 'https://github.com/IsraeliWarrior/bynet.git'
+                    git branch: 'main', url: 'https://github.com/IsraeliWarrior/bynet.git'
                 }
             }
         }
