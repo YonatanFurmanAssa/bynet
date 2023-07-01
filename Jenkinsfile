@@ -24,7 +24,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE_NAME = 'yonatanfurmandocker/bynet_app2'
-        DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials')
+        DOCKER_HUB_CREDS_ID = credentials('docker-hub-credentials')
     }
 
     stages {
