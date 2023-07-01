@@ -1,5 +1,5 @@
 pipeline {
-    agent {{
+    agent {
         kubernetes {
             defaultContainer 'jnlp'
             yaml """
@@ -50,4 +50,3 @@ pipeline {
             }
         }
     }
-
