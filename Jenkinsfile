@@ -13,10 +13,20 @@ pipeline {
                   - name: jnlp
                     image: jenkins/inbound-agent:3107.v665000b_51092-15
                     tty: true
+                    volumeMounts:
+                      - name: frontend-dir
+                        mountPath: /frontend
                   - name: docker
                     image: docker:stable-dind
                     securityContext:
                       privileged: true
+                    volumeMounts:
+                      - name: frontend-dir
+                        mountPath: /frontend
+                  volumes:
+                    - name: frontend-dir
+                      hostPath:
+                        path: /Users/yonatanf/bynet/bynet/Frontend
             """
         }
     }
@@ -32,7 +42,7 @@ pipeline {
                 container(name: 'docker', shell: '/bin/sh') {
                     script {
                         docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/Users/yonatanf/bynet/bynet/Frontend/')
+                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/frontend')
                         }
                     }
                 }
@@ -49,11 +59,9 @@ pipeline {
                 }
 
                 container(name: 'jnlp', shell: '/bin/sh') {
-                    sh "docker run -d --name my-app-container ${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
+                    sh "kubectl create deployment my-app --image=${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                 }
             }
         }
     }
 }
-
-
