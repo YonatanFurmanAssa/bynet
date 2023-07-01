@@ -14,17 +14,9 @@ pipeline {
                     image: jenkins/inbound-agent:3107.v665000b_51092-15
                     tty: true
                   - name: docker
-                    image: docker:latest
-                    command:
-                      - cat
-                    tty: true
-                    volumeMounts:
-                      - name: dockersock
-                        mountPath: /var/run/docker.sock
-                  volumes:
-                    - name: dockersock
-                      hostPath:
-                        path: /var/run/docker.sock
+                    image: docker:stable-dind
+                    securityContext:
+                      privileged: true
             """
         }
     }
@@ -34,16 +26,14 @@ pipeline {
         DOCKER_HUB_CREDS_ID = credentials('docker-hub-credentials')
     }
 
-    tools {
-        dockerTool 'docker'
-    }
-
     stages {
         stage('Build Docker Image') {
             steps {
                 container(name: 'docker', shell: '/bin/sh') {
                     script {
-                        docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/Users/yonatanf/bynet/bynet/Frontend')
+                        docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/Users/yonatanf/bynet/bynet/Frontend/Dockerfile')
+                        }
                     }
                 }
             }
