@@ -34,11 +34,17 @@ pipeline {
         DOCKER_HUB_CREDS_ID = credentials('docker-hub-credentials')
     }
 
+    tools {
+        docker 'docker'
+    }
+
     stages {
         stage('Build Docker Image') {
             steps {
                 container(name: 'docker', shell: '/bin/sh') {
-                    sh "docker build -t ${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID} ."
+                    script {
+                        docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/Users/yonatanf/bynet/bynet/Frontend')
+                    }
                 }
             }
         }
@@ -46,7 +52,7 @@ pipeline {
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 container(name: 'docker', shell: '/bin/sh') {
-                    withCredentials([string(credentialsId: env.DOCKER_HUB_CREDS_ID, variable: 'docker-hub-credentials')]) {
+                    withCredentials([string(credentialsId: env.DOCKER_HUB_CREDS_ID, variable: 'DOCKER_HUB_CREDS')]) {
                         sh "docker login -u ${env.DOCKER_HUB_CREDS_USR} -p ${env.DOCKER_HUB_CREDS_PSW}"
                         sh "docker push ${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                     }
