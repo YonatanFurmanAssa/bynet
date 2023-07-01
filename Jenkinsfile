@@ -6,10 +6,21 @@ pipeline {
     }
     
     stages {
-        stage('Build Docker Image') {
+        stage('Clone Repository') {
             steps {
-                sh 'docker build -t yonatanfurmandocker/bynet_app2:latest /Users/yonatanf/bynet/bynet/Frontend/Dockerfile'
+                git branch: 'master', url: 'https://github.com/IsraeliWarrior/bynet.git'
             }
         }
+        
+        stage('Build Docker Image') {
+            steps {
+                dir('/') {
+                    sh 'docker build -t yonatanfurmandocker/bynet_app2:latest .'
+                }
+            }
+        }
+        
+        // Other stages in the pipeline
     }
 }
+
