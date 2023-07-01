@@ -13,20 +13,10 @@ pipeline {
                   - name: jnlp
                     image: jenkins/inbound-agent:3107.v665000b_51092-15
                     tty: true
-                    volumeMounts:
-                      - name: frontend-dir
-                        mountPath: /Frontend
                   - name: docker
                     image: docker:stable-dind
                     securityContext:
                       privileged: true
-                    volumeMounts:
-                      - name: frontend-dir
-                        mountPath: /Frontend
-                  volumes:
-                    - name: frontend-dir
-                      hostPath:
-                        path: /Users/yonatanf/bynet/bynet/Frontend
             """
         }
     }
@@ -37,13 +27,20 @@ pipeline {
     }
 
     stages {
+        stage('Clone Repository') {
+            steps {
+                container(name: 'docker', shell: '/bin/sh') {
+                    git 'https://github.com/IsraeliWarrior/bynet.git'
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 container(name: 'docker', shell: '/bin/sh') {
                     script {
-                            sh "ls -a"
-                            docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '.')
+                        docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
+                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/bynet/Frontend')
                         }
                     }
                 }
