@@ -11,7 +11,7 @@ pipeline {
                 spec:
                   containers:
                   - name: jnlp
-                    image: jenkins/jnlp-agent:4.10-4
+                    image: jenkins/inbound-agent:3107.v665000b_51092-15
                     tty: true
                   - name: docker
                     image: docker:latest
