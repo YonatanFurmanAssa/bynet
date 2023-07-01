@@ -17,14 +17,14 @@ pipeline {
 
         stage('Deploy to Kubernetes Cluster') {
             steps {
-                container('docker') {
+                script {
                         sh "docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}"
                         sh "docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
+                        sh "kubectl create deployment my-app --image=${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                 }
 
-                container('jnlp') {
-                    sh "kubectl create deployment my-app --image=${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
-                }
+                        
+                
             }
         }
     }
