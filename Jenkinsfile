@@ -15,14 +15,14 @@ pipeline {
                     tty: true
                     volumeMounts:
                       - name: frontend-dir
-                        mountPath: /frontend
+                        mountPath: /Frontend
                   - name: docker
                     image: docker:stable-dind
                     securityContext:
                       privileged: true
                     volumeMounts:
                       - name: frontend-dir
-                        mountPath: /frontend
+                        mountPath: /Frontend
                   volumes:
                     - name: frontend-dir
                       hostPath:
