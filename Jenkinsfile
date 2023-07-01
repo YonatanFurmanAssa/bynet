@@ -32,7 +32,7 @@ pipeline {
                 container(name: 'docker', shell: '/bin/sh') {
                     script {
                         docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/Users/yonatanf/bynet/bynet/Frontend/Dockerfile')
+                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/Users/yonatanf/bynet/bynet/Frontend/')
                         }
                     }
                 }
