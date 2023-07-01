@@ -9,13 +9,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "dockerd"
                     sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID} /Users/yonatanf/bynet/bynet/Frontend/Dockerfile"
                 }
             }
         }
 
-        stage('Deploy to Kubernetes Cluster') {
+        stage('Deploy to Kubernetes Cluster and also register to artifactory') {
             steps {
                 script {
                         sh "docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}"
