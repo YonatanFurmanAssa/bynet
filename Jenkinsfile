@@ -39,7 +39,7 @@ pipeline {
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 container('docker') {
-                    withCredentials([string(credentialsId: DOCKER_HUB_CREDENTIALS, variable: 'DOCKER_HUB_CREDS')]) {
+                    withCredentials([string(credentialsId: DOCKER_HUB_CREDS_ID, variable: 'DOCKER_HUB_CREDS')]) {
                         sh "docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}"
                         sh "docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                     }
