@@ -11,7 +11,7 @@ pipeline {
                 spec:
                   containers:
                   - name: jnlp
-                    image: jenkins/inbound-agent:3107.v665000b_51092-15
+                    image: jenkins/jnlp-agent:4.10-4
                     tty: true
                   - name: docker
                     image: docker:latest
@@ -31,7 +31,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 container('docker') {
-                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID  /Users/yonatanf/bynet/bynet/Frontend} ."
+                    sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID} ."
                 }
             }
         }
@@ -39,9 +39,8 @@ pipeline {
         stage('Deploy to Kubernetes Cluster') {
             steps {
                 container('docker') {
-                  sh 'echo $DOCKERHUB_CREDS_PSW | docker login -u $DOCKERHUB_CREDS_USR --password-stdin'
-                  sh "docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
-                    }
+                        sh "docker login -u ${DOCKER_HUB_CREDS_USR} -p ${DOCKER_HUB_CREDS_PSW}"
+                        sh "docker push ${DOCKER_IMAGE_NAME}:${env.BUILD_ID}"
                 }
 
                 container('jnlp') {
@@ -50,3 +49,4 @@ pipeline {
             }
         }
     }
+}
