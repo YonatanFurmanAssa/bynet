@@ -1,26 +1,6 @@
 pipeline {
-    agent {
-        kubernetes {
-            defaultContainer 'jnlp'
-            yaml """
-                apiVersion: v1
-                kind: Pod
-                metadata:
-                  labels:
-                    app: jenkins-agent
-                spec:
-                  containers:
-                  - name: jnlp
-                    image: jenkins/inbound-agent:3107.v665000b_51092-15
-                    tty: true
-                  - name: docker
-                    image: docker:latest
-                    command:
-                      - cat
-                    tty: true
-            """
-        }
-    }
+    agent any
+       
 
     environment {
         DOCKER_IMAGE_NAME = 'yonatanfurmandocker/bynet_app2'
