@@ -41,7 +41,7 @@ pipeline {
                     script {
                         sh 'ls -a'
                         docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '.')
+                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", 'https://github.com/IsraeliWarrior/bynet.git#main:Frontend')
                         }
                     }
                 }
