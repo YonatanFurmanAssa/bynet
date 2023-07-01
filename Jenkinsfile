@@ -1,8 +1,6 @@
 pipeline {
     agent {
-         tools {
-        dockerTool 'docker'
-    }
+      
         kubernetes {
             defaultContainer 'jnlp'
             yaml """
@@ -23,6 +21,9 @@ pipeline {
                     tty: true
             """
         }
+    }
+     tools {
+        dockerTool 'docker'
     }
 
     environment {
