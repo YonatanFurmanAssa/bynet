@@ -1,7 +1,5 @@
 pipeline {
     agent any
-       
-
     environment {
         DOCKER_IMAGE_NAME = 'yonatanfurmandocker/bynet_app2'
         DOCKER_HUB_CREDS = credentials('docker-hub-credentials')
@@ -10,7 +8,7 @@ pipeline {
     stages {
         stage('Build Docker Image') {
             steps {
-                container('docker') {
+                script {
                     sh "dockerd"
                     sh "docker build -t ${DOCKER_IMAGE_NAME}:${env.BUILD_ID} /Users/yonatanf/bynet/bynet/Frontend/Dockerfile"
                 }
