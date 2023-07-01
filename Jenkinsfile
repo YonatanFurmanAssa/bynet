@@ -39,8 +39,9 @@ pipeline {
             steps {
                 container(name: 'docker', shell: '/bin/sh') {
                     script {
+                        sh 'ls -a'
                         docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
-                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '/bynet/Frontend')
+                            docker.build("${env.DOCKER_IMAGE_NAME}:${env.BUILD_ID}", '.')
                         }
                     }
                 }
