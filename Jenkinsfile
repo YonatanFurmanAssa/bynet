@@ -38,7 +38,7 @@ pipeline {
                 container('docker') {
                     script {
                         // Move to the cloned repository directtory
-                        sh 'cd ./Frontend'
+                        sh 'cd Frontend'
                         
                         // Build Docker image from the Dockerfile in the cloned repository directory
                         def dockerImage = docker.build('yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest','.')
