@@ -3,7 +3,7 @@ pipeline {
         kubernetes {
             label 'my-jenkins-agent'
             defaultContainer 'jnlp'
-            yaml """
+            yaml '''
             apiVersion: v1
             kind: Pod
             metadata:
@@ -21,7 +21,6 @@ pipeline {
                   mountPath: /var/run/docker.sock
               - name: jnlp
                 image: jenkins/inbound-agent
-                args: ['$(JENKINS_URL)', '$(AGENT_NAME)']
                 env:
                 - name: DOCKER_HOST
                   value: tcp://docker:2376
@@ -29,7 +28,7 @@ pipeline {
               - name: dockersock
                 hostPath:
                   path: /var/run/docker.sock
-            """
+            '''
         }
     }
     
@@ -60,4 +59,3 @@ pipeline {
         }
     }
 }
-"""
