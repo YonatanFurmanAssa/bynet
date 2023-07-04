@@ -36,12 +36,11 @@ pipeline {
             steps {
                 container("docker") {
                     script {
-                        sh "dockerd"
                         // Build Docker image from the Dockerfile in the cloned repository directory
                         frontDockerImage = docker.build("yonatanfurmandocker/bynet-frontend:1.0", "./Frontend")
                         // Push the image to DockerHub using global credentials
                         docker.withRegistry("https://registry.hub.docker.com", "docker-hub-credentials") {
-                            dockerImage.push()
+                            frontDockerImage.push()
                         }
                     }
                 }
