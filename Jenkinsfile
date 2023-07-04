@@ -1,8 +1,8 @@
 pipeline {
     agent {
         kubernetes {
-            defaultContainer 'jnlp'
-            yaml '''
+            defaultContainer "jnlp"
+            yaml """
             apiVersion: v1
             kind: Pod
             metadata:
@@ -27,21 +27,21 @@ pipeline {
               - name: dockersock
                 hostPath:
                   path: /var/run/docker.sock
-            '''
+            """
         }
     }
     
     stages {
-        stage('Build Docker Image') {
+        stage("Build Docker Image") {
             steps {
-                container('docker') {
+                container("docker") {
                     script {
                          
                         // Build Docker image from the Dockerfile in the cloned repository directory
-                        def dockerImage = docker.build('yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest','./Frontend')
+                        def dockerImage = docker.build("yonatanfurmandocker/bynet-frontend:"${env.BUILD_ID}":latest","./Frontend")
                         
                         // Push the image to DockerHub using global credentials
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
+                        docker.withRegistry("https://registry.hub.docker.com", "docker-hub-credentials") {
                             dockerImage.push()
                         }
                     }
