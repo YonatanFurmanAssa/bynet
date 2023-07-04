@@ -40,7 +40,7 @@ pipeline {
                 container("docker") {
                     script {
                         // Build Docker image from the Dockerfile in the cloned repository directory
-                        frontDockerImage = docker.build("$frontRegistry:${env.BUILD_ID}:latest", "./Frontend")
+                        frontDockerImage = docker.build("$frontRegistry:${env.BUILD_ID}", "./Frontend")
                         // Push the image to DockerHub using global credentials
                         docker.withRegistry("https://registry.hub.docker.com", "docker-hub-credentials") {
                             dockerImage.push()
