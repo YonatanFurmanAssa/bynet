@@ -41,7 +41,7 @@ pipeline {
                         sh 'cd bynet/Frontend'
                         
                         // Build Docker image from the Dockerfile in the cloned repository directory
-                        def dockerImage = docker.build('your-dockerhub-username/your-image-name:tag', '.')
+                        def dockerImage = docker.build('yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}','.')
                         
                         // Push the image to DockerHub using global credentials
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
