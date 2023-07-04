@@ -43,7 +43,7 @@ pipeline {
                         sh 'pwd'
                         
                         // Build Docker image from the Dockerfile in the cloned repository directory
-                        def dockerImage = docker.build('yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}','./Frontend')
+                        def dockerImage = docker.build('yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest','./Frontend')
                         
                         // Push the image to DockerHub using global credentials
                         docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
