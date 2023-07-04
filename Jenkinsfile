@@ -1,7 +1,6 @@
 pipeline {
     agent {
         kubernetes {
-            label 'my-jenkins-agent'
             defaultContainer 'jnlp'
             yaml '''
             apiVersion: v1
