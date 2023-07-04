@@ -14,7 +14,6 @@ pipeline {
                 image: docker
                 command:
                 - cat
-                - dockerd
                 tty: true
                 volumeMounts:
                 - name: dockersock
