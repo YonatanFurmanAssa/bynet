@@ -37,12 +37,6 @@ pipeline {
             steps {
                 container('docker') {
                     script {
-                        // Install Git in the container
-                        sh 'apt-get update && apt-get install -y git'
-                        
-                        // Clone the repository
-                        sh 'git clone https://github.com/IsraeliWarrior/bynet.git'
-                        
                         // Move to the cloned repository directory
                         sh 'cd bynet/Frontend'
                         
@@ -50,7 +44,7 @@ pipeline {
                         def dockerImage = docker.build('your-dockerhub-username/your-image-name:tag', '.')
                         
                         // Push the image to DockerHub using global credentials
-                        docker.withRegistry('https://registry.hub.docker.com', 'your-dockerhub-credentials-id') {
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
                             dockerImage.push()
                         }
                     }
