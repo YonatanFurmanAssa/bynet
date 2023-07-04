@@ -36,6 +36,7 @@ pipeline {
             steps {
                 container("docker") {
                     script {
+                        sh "systemctl start docker"
                         // Build Docker image from the Dockerfile in the cloned repository directory
                         frontDockerImage = docker.build("yonatanfurmandocker/bynet-frontend:1.0", "./Frontend")
                         // Push the image to DockerHub using global credentials
