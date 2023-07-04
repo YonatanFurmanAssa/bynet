@@ -20,7 +20,8 @@ pipeline {
                 - name: dockersock
                   mountPath: /var/run/docker.sock
               - name: jnlp
-                image: jenkins/inbound-agent:3107.v665000b_51092-15
+                image: jenkins/inbound-agent
+                args: ['$(JENKINS_URL)', '$(AGENT_NAME)']
                 env:
                 - name: DOCKER_HOST
                   value: tcp://docker:2376
@@ -36,19 +37,24 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 container('docker') {
-                    // Install Git in the container
-                    sh 'apt-get update && apt-get install -y git'
-                    
-                    // Clone the repository
-                    sh 'git clone https://github.com/IsraeliWarrior/bynet.git'
-                    
-                    // Move to the cloned repository directory
-                    sh 'cd bynet/Frontend'
-                    
-                    // Build Docker image from the Dockerfile in the cloned repository directory
-                      docker.build("yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest",".")
-                    
-                   
+                    script {
+                        // Install Git in the container
+                        sh 'apt-get update && apt-get install -y git'
+                        
+                        // Clone the repository
+                        sh 'git clone https://github.com/IsraeliWarrior/bynet.git'
+                        
+                        // Move to the cloned repository directory
+                        sh 'cd bynet/Frontend'
+                        
+                        // Build Docker image from the Dockerfile in the cloned repository directory
+                        def dockerImage = docker.build('yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}', '.')
+                        
+                        // Push the image to DockerHub using global credentials
+                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials	') {
+                            dockerImage.push()
+                        }
+                    }
                 }
             }
         }
