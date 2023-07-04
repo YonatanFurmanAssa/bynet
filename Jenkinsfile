@@ -16,14 +16,14 @@ pipeline {
                 command:
                 - cat
                 tty: true
+                volumeMounts:
+                - name: dockersock
+                  mountPath: /var/run/docker.sock
               - name: jnlp
                 image: jenkins/inbound-agent:3107.v665000b_51092-15
                 env:
                 - name: DOCKER_HOST
                   value: tcp://docker:2376
-                volumeMounts:
-                - name: dockersock
-                  mountPath: /var/run/docker.sock
               volumes:
               - name: dockersock
                 hostPath:
@@ -33,26 +33,24 @@ pipeline {
     }
     
     stages {
-        stage('Clone Repository') {
-            steps {
-                container('docker') {
-                    script {
-                    git 'https://github.com/IsraeliWarrior/bynet.git'
-                    }
-                }
-            }
-        }
-        
         stage('Build Docker Image') {
             steps {
                 container('docker') {
-                    script {
-                       FrontendImage = docker.build("yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest", "./bynet/Frontend")
+                    // Install Git in the container
+                    sh 'apt-get update && apt-get install -y git'
                     
-                        // Optional: Push the image to a Docker registry
-                        docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials') {
-                            dockerImage.push()
-                        }
+                    // Clone the repository
+                    sh 'git clone https://github.com/IsraeliWarrior/bynet.git'
+                    
+                    // Move to the cloned repository directory
+                    sh 'cd bynet/Frontend'
+                    
+                    // Build Docker image from the Dockerfile in the cloned repository directory
+                    backDockerImage = docker.build("yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest",".")
+                    
+                    // Push the image to DockerHub using global credentials
+                    docker.withRegistry('https://registry.hub.docker.com', 'your-dockerhub-credentials-id') {
+                        dockerImage.push()
                     }
                 }
             }
