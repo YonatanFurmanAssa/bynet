@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        frontRegistry = "yonatanfurmandocker/bynet-frontend "
+    }
     agent {
         kubernetes {
             defaultContainer "jnlp"
@@ -36,10 +39,8 @@ pipeline {
             steps {
                 container("docker") {
                     script {
-                         
                         // Build Docker image from the Dockerfile in the cloned repository directory
-                        dockerImage = docker.build("yonatanfurmandocker/bynet-frontend:${env.BUILD_ID}:latest","./Frontend")
-                        
+                        frontDockerImage = docker.build("$frontRegistry:${env.BUILD_ID}:latest", "./Frontend")
                         // Push the image to DockerHub using global credentials
                         docker.withRegistry("https://registry.hub.docker.com", "docker-hub-credentials") {
                             dockerImage.push()
